@@ -29,6 +29,7 @@
             left: 50%;
             transform: translateX(-50%);
             transition: transform 0.1s;
+            max-width: 100px; /* Defina a largura máxima do boneco */
         }
 
         .controls {
@@ -91,31 +92,29 @@
         function moveLeft() {
             character.style.left = `${character.offsetLeft - step}px`;
             character.classList.add('walk');
+            setTimeout(() => character.classList.remove('walk'), 500);
         }
 
         function moveRight() {
             character.style.left = `${character.offsetLeft + step}px`;
             character.classList.add('walk');
+            setTimeout(() => character.classList.remove('walk'), 500);
         }
 
         function punch() {
             character.classList.add('punch');
+            setTimeout(() => character.classList.remove('punch'), 200);
         }
 
         function kick() {
             character.classList.add('kick');
+            setTimeout(() => character.classList.remove('kick'), 300);
         }
 
         moveLeftButton.addEventListener('click', moveLeft);
         moveRightButton.addEventListener('click', moveRight);
         punchButton.addEventListener('click', punch);
         kickButton.addEventListener('click', kick);
-
-        document.addEventListener('animationend', (event) => {
-            if (event.animationName === 'walk' || event.animationName === 'punch' || event.animationName === 'kick') {
-                character.classList.remove('walk', 'punch', 'kick');
-            }
-        });
     </script>
 </body>
 </html>

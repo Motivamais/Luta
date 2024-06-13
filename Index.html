@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Luta</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: #333;
+        }
+        
+        #game-area {
+            width: 800px;
+            height: 600px;
+            position: relative;
+            background-color: #555;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        #character {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: transform 0.1s;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .controls button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .walk {
+            animation: walk 0.5s steps(4) infinite;
+        }
+
+        @keyframes walk {
+            from { background-position: 0; }
+            to { background-position: -400px; }
+        }
+
+        .punch {
+            animation: punch 0.2s steps(2) 1;
+        }
+
+        @keyframes punch {
+            from { background-position: 0; }
+            to { background-position: -200px; }
+        }
+
+        .kick {
+            animation: kick 0.3s steps(3) 1;
+        }
+
+        @keyframes kick {
+            from { background-position: 0; }
+            to { background-position: -300px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="game-area">
+        <img id="character" src="boneco.png" alt="Boneco">
+    </div>
+    <div class="controls">
+        <button id="move-left">Andar para Trás</button>
+        <button id="move-right">Andar para Frente</button>
+        <button id="punch">Socar</button>
+        <button id="kick">Chutar</button>
+    </div>
+    <script>
+        const character = document.getElementById('character');
+        const moveLeftButton = document.getElementById('move-left');
+        const moveRightButton = document.getElementById('move-right');
+        const punchButton = document.getElementById('punch');
+        const kickButton = document.getElementById('kick');
+
+        const step = 10;
+
+        function moveLeft() {
+            character.style.left = `${character.offsetLeft - step}px`;
+            character.classList.add('walk');
+        }
+
+        function moveRight() {
+            character.style.left = `${character.offsetLeft + step}px`;
+            character.classList.add('walk');
+        }
+
+        function punch() {
+            character.classList.add('punch');
+        }
+
+        function kick() {
+            character.classList.add('kick');
+        }
+
+        moveLeftButton.addEventListener('click', moveLeft);
+        moveRightButton.addEventListener('click', moveRight);
+        punchButton.addEventListener('click', punch);
+        kickButton.addEventListener('click', kick);
+
+        document.addEventListener('animationend', (event) => {
+            if (event.animationName === 'walk' || event.animationName === 'punch' || event.animationName === 'kick') {
+                character.classList.remove('walk', 'punch', 'kick');
+            }
+        });
+    </script>
+</body>
+</html>
